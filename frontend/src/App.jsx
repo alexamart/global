@@ -11,13 +11,13 @@ const fetchJson = async (url, options = {}) => {
 function App() {
   const [payments, setPayments] = useState([]);
   const [sync, setSync] = useState(null);
-  const [status, setStatus] = useState('Ready');
+  const [status, setStatus] = useState('Listo');
 
   const loadPayments = async () => {
-    setStatus('Loading payments...');
+    setStatus('Cargando pagos...');
     const data = await fetchJson('/api/payments');
     setPayments(Array.isArray(data) ? data : []);
-    setStatus('Payments loaded.');
+    setStatus('Pagos cargados.');
   };
 
   const loadSync = async () => {
@@ -26,26 +26,26 @@ function App() {
   };
 
   const registerWatch = async () => {
-    setStatus('Registering Gmail watch...');
+    setStatus('Registrando watch de Gmail...');
     const result = await fetchJson('/api/watch', { method: 'POST' });
     setSync(result);
-    setStatus('Watch registered.');
+    setStatus('Watch registrado.');
   };
 
   const refreshPayments = async () => {
     if (!sync?.history_id) {
-      setStatus('No history_id available. Register watch first.');
+      setStatus('No hay history_id. Registra el watch primero.');
       return;
     }
 
-    setStatus('Refreshing payments...');
+    setStatus('Actualizando pagos...');
     await fetchJson('/api/payments/refresh', {
       method: 'POST',
       body: JSON.stringify({ history_id: sync.history_id }),
     });
     await loadPayments();
     await loadSync();
-    setStatus('Refresh complete.');
+    setStatus('Actualización completa.');
   };
 
   useEffect(() => {
@@ -80,34 +80,34 @@ function App() {
   return (
     <div className="app-shell">
       <header>
-        <h1>Global Admin</h1>
-        <p>Gmail payment ingestion admin dashboard.</p>
+        <h1>Administración Global</h1>
+        <p>Panel de administración de pagos de Gmail.</p>
       </header>
 
       <section className="controls">
-        <button onClick={registerWatch}>Register Gmail Watch</button>
-        <button onClick={refreshPayments}>Refresh Payments</button>
+        <button onClick={registerWatch}>Registrar watch de Gmail</button>
+        <button onClick={refreshPayments}>Actualizar pagos</button>
       </section>
 
       <section className="status">
-        <strong>Status:</strong> {status}
+        <strong>Estado:</strong> {status}
       </section>
 
       <section className="sync-state">
-        <h2>Sync State</h2>
+        <h2>Estado de sincronización</h2>
         <pre>{JSON.stringify(sync, null, 2)}</pre>
       </section>
 
       <section className="payments-list">
-        <h2>Payments</h2>
+        <h2>Pagos</h2>
         <table>
           <thead>
             <tr>
               <th>ID</th>
-              <th>Sender</th>
-              <th>Amount</th>
-              <th>Transaction Date</th>
-              <th>Subject</th>
+              <th>Remitente</th>
+              <th>Monto</th>
+              <th>Fecha</th>
+              <th>Asunto</th>
             </tr>
           </thead>
           <tbody>
@@ -123,7 +123,7 @@ function App() {
               ))
             ) : (
               <tr>
-                <td colSpan="5">No payments found.</td>
+                <td colSpan="5">No se encontraron pagos.</td>
               </tr>
             )}
           </tbody>
