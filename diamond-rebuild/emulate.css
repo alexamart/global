@@ -1,0 +1,180 @@
+/* Emulation overrides to match Diamond design reference */
+:root{
+  --yellow:#f2e437;
+  --cl-yellow:#f2e437;
+  --yellow-strong:#f1c700;
+  --bg:#0a0a0b;
+  --card:#141416;
+  --muted:#9a9a9a;
+  --accent:#ffd400;
+  --glass: rgba(255,255,255,0.02);
+}
+
+/* Page background: near-black with subtle dot grid */
+html,body{
+  height:100%;
+  background-color:var(--bg);
+  color:#eaeaea;
+  font-family: 'Helvetica Neue', system-ui, Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.015) 0.5px, transparent 0.5px),
+    linear-gradient(transparent 24px, rgba(255,255,255,0.01) 24px),
+    linear-gradient(90deg, transparent 24px, rgba(255,255,255,0.01) 24px);
+  background-size: 8px 8px, 8px 48px, 48px 8px;
+}
+
+/* Header tweaks */
+.site-header{
+  background:transparent;
+  padding:18px 40px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.site-nav a{
+  color:#fff;
+  font-weight:900;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  margin-left:22px;
+  font-size:15px;
+  padding:6px 8px;
+}
+.brand{color:var(--yellow);font-weight:800;letter-spacing:0.12em}
+
+/* Section headings — big display like reference */
+.section-heading h2{
+  font-family: 'Helvetica Neue', system-ui, Arial, sans-serif;
+  font-weight:900;
+  color:#fff;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+}
+
+/* Special style for Recargas large title */
+.section#recharges .section-heading h2,
+.section-heading--light h2{
+  font-size:140px;
+  line-height:0.85;
+  margin:0 0 18px 0;
+  letter-spacing:0.22em;
+  font-weight:900;
+  transform:translateY(-6px);
+  text-shadow: 0 6px 16px rgba(0,0,0,0.7), 0 1px 0 rgba(255,255,255,0.02);
+}
+
+/* Recharge grid cards */
+.recharge-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:28px;
+  align-items:stretch;
+  padding:40px 40px 80px;
+}
+.recharge-card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.04);
+  padding:28px 20px;
+  border-radius:8px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  min-height:360px;
+  position:relative;
+  overflow:hidden;
+}
+.recharge-card h3{
+  font-size:20px;
+  margin:18px 0 8px;
+  color:#fff;
+  text-transform:uppercase;
+  letter-spacing:0.14em;
+}
+.recharge-card__coins{
+  font-size:58px;
+  margin-top:12px;
+  filter: drop-shadow(0 6px 8px rgba(0,0,0,0.6));
+}
+.recharge-card ul{margin-top:12px;list-style:none;padding:0;text-align:left}
+.recharge-card li{display:flex;justify-content:space-between;padding:6px 0;border-top:1px dashed rgba(255,255,255,0.02);color:var(--muted);}
+.recharge-card li span{color:#fff;font-weight:700}
+
+/* Gold medal badge */
+.recharge-card__medal{
+  position:absolute;
+  top:18px;
+  right:18px;
+  background: radial-gradient(circle at 35% 25%, #fff6d0 0%, #ffd27a 20%, #c68600 60%, #6b3f00 100%);
+  color:#111;
+  font-weight:900;
+  padding:10px 14px;
+  border-radius:12px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.6), inset 0 -6px 10px rgba(255,255,255,0.08);
+}
+
+/* Pricing cards: yellow folder look adjustments */
+.section--pricing{
+  padding:28px 40px 60px;
+}
+.pricing__scroll{position:relative}
+.pricing__swiper{overflow:visible}
+.pricing__slide{min-height:180px}
+.pricing__block{position:relative;overflow:hidden;border-radius:8px}
+.pricing__block-inner{position:relative;padding:22px;z-index:3}
+.pricing__content{background:transparent;padding:28px 22px;position:relative}
+.pricing__head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.pricing__icon{font-size:28px}
+.pricing__item{margin-bottom:12px}
+.pricing__line{display:flex;justify-content:space-between;align-items:center}
+.pricing__details{display:flex;flex-direction:column}
+.pricing__time{font-weight:800}
+.pricing__price{font-weight:900}
+.price-card{display:none}
+.price-card__content{display:none}
+.price-card__btn{display:none}
+
+/* Exact mask wrapper used on live site for the "folder" pricing artwork */
+.pricing__block-mask{
+  background-color:var(--cl-yellow);
+  display:flex;
+  flex-direction:column;
+  left:0;
+  right:0;
+  top:0;
+  position:absolute;
+  height:100%;
+  z-index:1;
+}
+.pricing__block-mask svg{display:block;height:auto;width:100.1%}
+.pricing__block-mask svg:last-child{bottom:-.02px;margin-top:auto;position:relative}
+
+.pricing__block-inner{color:var(--cl-just-black, #000);position:relative;z-index:3}
+
+/* Ensure mask shows behind content and clip fits */
+.pricing__block{position:relative;min-height:160px}
+.pricing__block .pricing__block-mask path{fill:var(--cl-yellow)}
+.pricing__block-inner{padding:28px}
+
+/* Footer yellow bar */
+.site-footer{
+  background:linear-gradient(180deg,var(--yellow) 0%, #e9d600 100%);
+  color:#111;
+  padding:36px 40px;
+}
+
+/* Small screens tweaks */
+@media (max-width:800px){
+  .section-heading--light h2{font-size:48px;letter-spacing:0.12em}
+  .recharge-grid{padding:28px}
+}
+
+@media (max-width:1200px){
+  .section-heading--light h2{font-size:96px;letter-spacing:0.16em}
+}
+
+@media (min-width:1600px){
+  .section-heading--light h2{font-size:180px}
+}
