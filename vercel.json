@@ -19,14 +19,6 @@
       "dest": "/backend/app.js"
     },
     {
-      "src": "^/web/?$",
-      "dest": "/globalgames/index.html"
-    },
-    {
-      "src": "^/web/(.*)$",
-      "dest": "/globalgames/$1"
-    },
-    {
       "src": "^/admin/assets/(.*)$",
       "dest": "/frontend/dist/assets/$1"
     },
@@ -35,12 +27,8 @@
       "dest": "/frontend/dist/index.html"
     },
     {
-      "src": "^/$",
-      "dest": "/globalgames/index.html"
-    },
-    {
       "src": "^/(.*)$",
-      "dest": "/globalgames/$1"
+      "dest": "/backend/app.js"
     }
   ]
 }
