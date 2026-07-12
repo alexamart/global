@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "distribution": "Spaces",
+    "gallery": "Gallery",
+    "specs": "Specs",
+    "games": "Games",
+    "location": "Location",
+    "contact": "Contact"
+  },
+  "hero": {
+    "eyebrow": "Gaming Center",
+    "title": "Global\nGames",
+    "lead": "Premium gaming in Lima. Comfortable spaces, competitive community and an audiovisual experience designed for players.",
+    "action": "See location →",
+    "locationLabel": "Location",
+    "locationText": "Lima, Peru",
+    "hoursLabel": "Hours",
+    "hoursText": "Every day 10:00 - 23:00"
+  },
+  "distribution": {
+    "eyebrow": "Global Games",
+    "title": "Our Space",
+    "meta": "Designed to deliver the best gaming experience in Lima.",
+    "cardHeading": "A premium place for gaming",
+    "list": {
+      "0": "Strategic location in Lima, with easy access and great visibility.",
+      "1": "Interior design focused on performance, comfort, and brand experience.",
+      "2": "20 years of experience and customer satisfaction."
+    }
+  },
+  "gallery": {
+    "eyebrow": "Gallery",
+    "title": "Gaming Atmosphere",
+    "description": "Spaces designed for the ultimate gaming experience.",
+    "caption1": "Text",
+    "caption2": "Text 2",
+    "caption3": "Text 3",
+    "caption4": "Text 4 • Premium"
+  },
+  "specs": {
+    "eyebrow": "PC Specs",
+    "title": "Professional gaming hardware",
+    "meta": "Premium configurations for intense sessions, esports and streaming with high-performance components.",
+    "heroEyebrow": "Pro Setup",
+    "heroHeading": "Gaming stations built for competition and endurance",
+    "heroText": "Each rig combines CPUs, GPUs, memory and peripherals to keep FPS stable, reaction times fast and visuals crisp."
+  },
+  "games": {
+    "eyebrow": "Games",
+    "title": "100+ games available",
+    "meta": "Find your favorite titles and compete in tournaments.",
+    "count": "100+ games available",
+    "desc": "Featured:"
+  },
+  "location": {
+    "eyebrow": "Location",
+    "title": "Location on Maps",
+    "meta": "Check Global Games’ real location directly on Google Maps.",
+    "mapEyebrow": "Google Maps",
+    "mapTitle": "Global Games Lima",
+    "mapText": "Exact location of the gaming center and direct access to directions on Google Maps.",
+    "mapButton": "Open in Maps →"
+  },
+  "footer": {
+    "contact": "Contact",
+    "hours": "Hours",
+    "weekdays": "Mon–Thu: 11:00–22:00",
+    "weekend": "Fri–Sun: 11:00–23:00",
+    "reserve": "Reserve",
+    "reserveLink": "Reserve a spot →",
+    "brandEyebrow": "◆ Global Games",
+    "brandTitle": "Lan Center",
+    "brandCopyright": "© 2026 All rights reserved"
+  },
+  "status": {
+    "open": "OPEN",
+    "closed": "CLOSED",
+    "closed_until": "CLOSED until %s",
+    "closed_temporal": "Temporarily closed",
+    "schedule_prefix": "Hours: %s"
+  }
+}

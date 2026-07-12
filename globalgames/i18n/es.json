@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "distribution": "Espacios",
+    "gallery": "Galería",
+    "games": "Juegos",
+    "specs": "Specs",
+    "location": "Ubicación",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "eyebrow": "Centro gaming",
+    "title": "Global\nGames",
+    "lead": "Gaming premium en Lima. Espacios cómodos, comunidad competitiva y una experiencia diseñada para tu comodidad.",
+    "action": "Ver ubicación →",
+    "locationLabel": "Ubicación",
+    "locationText": "Lima, Perú",
+    "hoursLabel": "Horario",
+    "hoursText": "Todos los días de 10:00 a 23:00"
+  },
+  "distribution": {
+    "eyebrow": "Global Games",
+    "title": "Nuestro Espacio",
+    "meta": "Diseñado para ofrecer la mejor experiencia de gaming en Lima.",
+    "cardHeading": "Un lugar premium para gaming",
+    "list": {
+      "0": "Ubicación estratégica en Lima, con acceso sencillo y gran visibilidad.",
+      "1": "Diseño de interiores orientado a rendimiento, confort y experiencia de marca.",
+      "2": "20 años de experiencia y satisfacción del cliente."
+    }
+  },
+  "gallery": {
+    "eyebrow": "Galería",
+    "title": "Ambiente Gaming",
+    "description": "Espacios diseñados para la máxima experiencia de gaming.",
+    "caption1": "Texto",
+    "caption2": "Texto 2",
+    "caption3": "Texto 3",
+    "caption4": "Texto 4 • Premium"
+  },
+  "specs": {
+    "eyebrow": "PC Specs",
+    "title": "Hardware gaming profesional",
+    "meta": "Configuraciones premium para sesiones intensivas, esports y streaming con componentes de alto rendimiento.",
+    "heroEyebrow": "Configuración Pro",
+    "heroHeading": "Estaciones de juego diseñadas para competencia y duración",
+    "heroText": "Cada equipo combina CPUs, GPUs, memoria y periféricos de primera línea para mantener FPS estables, tiempos de reacción rápidos y una experiencia visual impecable."
+  },
+  "games": {
+    "eyebrow": "Juegos",
+    "title": "Más de 100+ juegos disponibles",
+    "meta": "Encuentra tus títulos favoritos y compite en torneos.",
+    "count": "Más de 100+ juegos disponibles",
+    "desc": "Destacados:"
+  },
+  "location": {
+    "eyebrow": "Ubicación",
+    "title": "Ubicación en Maps",
+    "meta": "Consulta la ubicación real de Global Games directamente en Google Maps.",
+    "mapEyebrow": "Google Maps",
+    "mapTitle": "Global Games Lima",
+    "mapText": "Ubicación exacta del centro gaming y acceso directo a indicaciones en Google Maps.",
+    "mapButton": "Abrir en Maps →"
+  },
+  "footer": {
+    "contact": "Contacto",
+    "hours": "Horario",
+    "weekdays": "Lun–Jue: 11:00–22:00",
+    "weekend": "Vie–Dom: 11:00–23:00",
+    "reserve": "Reserva",
+    "reserveLink": "Reservar plaza →",
+    "brandEyebrow": "◆ Global Games",
+    "brandTitle": "Lan Center",
+    "brandCopyright": "© 2026 All rights reserved"
+  },
+  "status": {
+    "open": "ABIERTO",
+    "closed": "CERRADO",
+    "closed_until": "CERRADO hasta %s",
+    "closed_temporal": "CERRADO temporalmente",
+    "schedule_prefix": "Horario: %s"
+  }
+}

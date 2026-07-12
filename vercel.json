@@ -15,19 +15,31 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
+      "src": "^/api/(.*)$",
       "dest": "/backend/app.js"
     },
     {
-      "src": "/assets/(.*)",
+      "src": "^/web/?$",
+      "dest": "/globalgames/index.html"
+    },
+    {
+      "src": "^/web/(.*)$",
+      "dest": "/globalgames/$1"
+    },
+    {
+      "src": "^/admin/assets/(.*)$",
       "dest": "/frontend/dist/assets/$1"
     },
     {
-      "src": "/favicon.ico",
-      "dest": "/frontend/dist/favicon.ico"
+      "src": "^/admin(?:/.*)?$",
+      "dest": "/frontend/dist/index.html"
     },
     {
-      "src": "/(.*)",
+      "src": "^/assets/(.*)$",
+      "dest": "/frontend/dist/assets/$1"
+    },
+    {
+      "src": "^/(.*)$",
       "dest": "/frontend/dist/index.html"
     }
   ]
