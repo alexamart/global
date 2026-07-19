@@ -28,8 +28,39 @@ header p {
 
 .controls {
   display: flex;
+  align-items: center;
   gap: 1rem;
   margin: 1.5rem 0;
+}
+
+.watch-status {
+  display: inline-flex;
+  align-items: center;
+}
+
+.watch-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1f2937;
+  background: #e5f2ff;
+}
+
+.watch-badge--on {
+  background: #dbf6e3;
+  color: #065f46;
+  border-color: #86efac;
+}
+
+.watch-badge--off {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
 }
 
 button {
@@ -70,6 +101,70 @@ tbody td {
 
 thead th {
   color: #374151;
+}
+
+.site-status {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.site-status__row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.site-status__toggle,
+.site-status__date,
+.site-status__text {
+  display: inline-flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.site-status__text {
+  flex: 1 1 320px;
+  min-width: 260px;
+}
+
+.site-status__text input,
+.site-status__date input {
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  padding: 0.65rem 0.8rem;
+  width: 100%;
+}
+
+.site-status__toggle input {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.site-status__date span,
+.site-status__text span {
+  color: #4b5563;
+}
+
+.site-status__date input {
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  padding: 0.65rem 0.8rem;
+}
+
+.site-status__actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.site-status__current {
+  color: #1f2937;
 }
 
 tbody tr:last-child td {

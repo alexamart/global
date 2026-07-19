@@ -24,3 +24,11 @@ Thumbs.db
 # Editor
 .vscode/
 .vercel
+# Debug and temporary logs
+build-debug*.log
+debug-*.js
+deploy-debug.txt
+env-check-response.txt
+tmp-*.js
+parse-test.js
+nodeprocs.txt

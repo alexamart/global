@@ -20,11 +20,11 @@
     },
     {
       "src": "^/admin/assets/(.*)$",
-      "dest": "/frontend/dist/assets/$1"
+      "dest": "/frontend/assets/$1"
     },
     {
       "src": "^/admin(?:/.*)?$",
-      "dest": "/frontend/dist/index.html"
+      "dest": "/frontend/index.html"
     },
     {
       "src": "^/(.*)$",

@@ -62,6 +62,11 @@
             <div><strong data-i18n="hero.locationLabel">Ubicación</strong><span data-i18n="hero.locationText">Lima, Perú</span></div>
             <div><strong data-i18n="hero.hoursLabel">Horario</strong><span data-i18n="hero.hoursText">Todos los días de 10:00 a 23:00</span></div>
           </div>
+          <div class="hero__social" aria-label="Redes Global Games">
+            <a class="social-square" href="https://www.facebook.com/globalgamespe" target="_blank" rel="noopener noreferrer" title="Facebook"><span>f</span></a>
+            <a class="social-square" href="https://www.instagram.com/globalgamespe" target="_blank" rel="noopener noreferrer" title="Instagram"><span>IG</span></a>
+            <a class="social-square" href="https://www.tiktok.com/@globalgamespe" target="_blank" rel="noopener noreferrer" title="TikTok"><span>TT</span></a>
+          </div>
         </div>
       </section>
 
@@ -184,56 +189,18 @@
         <div class="section-heading">
           <p class="section-heading__eyebrow" data-i18n="games.eyebrow">Juegos</p>
           <h2 data-i18n="games.title">Más de 100+ juegos disponibles</h2>
-          <p class="section-heading__meta" data-i18n="games.meta">Encuentra tus títulos favoritos y compite en torneos.</p>
+          <p class="section-heading__meta" data-i18n="games.meta">Busca tus títulos favoritos y descubre nuestras plataformas disponibles.</p>
         </div>
-        <div class="games-grid">
-          <article class="games-lead">
-            <p class="games-count" data-i18n="games.count">Más de 100+ juegos disponibles</p>
-            <p class="games-desc" data-i18n="games.desc">Destacados:</p>
-          </article>
-
-          <article class="game-card">
-            <a href="https://www.leagueoflegends.com/es-es/" target="_blank" rel="noopener noreferrer">
-              <img src="https://www.google.com/s2/favicons?sz=64&domain=leagueoflegends.com" alt="League of Legends logo" />
-              <h3>League of Legends</h3>
-            </a>
-          </article>
-
-          <article class="game-card">
-            <a href="https://www.counter-strike.net/cs2?l=spanish" target="_blank" rel="noopener noreferrer">
-              <img src="https://www.google.com/s2/favicons?sz=64&domain=counter-strike.net" alt="CS2 logo" />
-              <h3>Counter-Strike 2</h3>
-            </a>
-          </article>
-
-          <article class="game-card">
-            <a href="https://www.fortnite.com/" target="_blank" rel="noopener noreferrer">
-              <img src="https://www.google.com/s2/favicons?sz=64&domain=fortnite.com" alt="Fortnite logo" />
-              <h3>Fortnite</h3>
-            </a>
-          </article>
-
-          <article class="game-card">
-            <a href="https://www.dota2.com/home" target="_blank" rel="noopener noreferrer">
-              <img src="https://www.google.com/s2/favicons?sz=64&domain=dota2.com" alt="Dota 2 logo" />
-              <h3>Dota 2</h3>
-            </a>
-          </article>
-
-          <article class="game-card">
-            <a href="https://www.callofduty.com/es/warzone" target="_blank" rel="noopener noreferrer">
-              <img src="https://www.google.com/s2/favicons?sz=64&domain=callofduty.com" alt="Call of Duty Warzone logo" />
-              <h3>Call of Duty: Warzone</h3>
-            </a>
-          </article>
-
-          <article class="game-card">
-            <a href="https://playvalorant.com/es-mx/" target="_blank" rel="noopener noreferrer">
-              <img src="https://www.google.com/s2/favicons?sz=64&domain=playvalorant.com" alt="Valorant logo" />
-              <h3>Valorant</h3>
-            </a>
-          </article>
+        <div id="games-featured" class="games-featured" aria-label="Juegos principales"></div>
+        <div class="games-search-panel">
+          <label class="games-search" for="game-search-input">
+            <span>Buscar juego</span>
+            <input id="game-search-input" type="search" placeholder="Escribe un nombre de juego" autocomplete="off" />
+          </label>
+          <p class="games-search__hint">Plataformas: Steam, BattleNet, EpicGames, RioGamer y más</p>
+          <div id="platform-badges" class="platform-badges" aria-hidden="false"></div>
         </div>
+        <div id="games-results" class="games-grid" aria-live="polite"></div>
       </section>
 
      
@@ -295,10 +262,24 @@
     </main>
 
     <footer id="contact" class="site-footer">
-      <div class="footer__column">
-        <p class="eyebrow" data-i18n="footer.contact">Contacto</p>
+      <div class="footer__column footer__column--contact">
+        <p class="eyebrow" data-i18n="footer.contact">Contacto </p>
         <a href="mailto:globalgamespe@gmail.com">globalgamespe@gmail.com</a>
         <a href="tel:+51976659367">+51 976 659 367</a>
+        <div class="social-links" aria-label="Redes sociales Global Games">
+          <a class="social-link social-link--facebook" href="https://www.facebook.com/globalgamespe" target="_blank" rel="noopener noreferrer" title="Facebook">
+            <span class="social-link__icon">f</span>
+            <span>Facebook</span>
+          </a>
+          <a class="social-link social-link--instagram" href="https://www.instagram.com/globalgamespe" target="_blank" rel="noopener noreferrer" title="Instagram">
+            <span class="social-link__icon">↗</span>
+            <span>Instagram</span>
+          </a>
+          <a class="social-link social-link--tiktok" href="https://www.tiktok.com/@globalgamespe" target="_blank" rel="noopener noreferrer" title="TikTok">
+            <span class="social-link__icon">↗</span>
+            <span>TikTok</span>
+          </a>
+        </div>
       </div>
       <div class="footer__column">
         <p class="eyebrow" data-i18n="footer.hours">Horario</p>

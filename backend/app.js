@@ -8,12 +8,25 @@ const { parsePaymentEmail } = require('./services/gmailParser');
 const { getSyncState, saveSyncState, setWatchEnabled, setAllowedSenders, saveSiteStatus, parseAllowedSenders } = require('./services/sync');
 const { pullMessages } = require('./services/pubsub');
 const { ensureSchema } = require('./db');
+const { getGamesCatalog, seedGamesCatalog } = require('./services/games');
 
 dotenv.config();
 
-ensureSchema().catch((error) => {
-  console.warn('Failed to ensure database schema:', error.message || error);
-});
+ensureSchema()
+  .then(async () => {
+    try {
+      const { query } = require('./db');
+      const existing = await query('SELECT COUNT(*)::int AS count FROM games');
+      if (existing.rows?.[0]?.count === 0) {
+        await seedGamesCatalog((text, params) => query(text, params));
+      }
+    } catch (error) {
+      console.warn('Failed to seed games catalog:', error.message || error);
+    }
+  })
+  .catch((error) => {
+    console.warn('Failed to ensure database schema:', error.message || error);
+  });
 
 const {
   GMAIL_USER_EMAIL,
@@ -113,7 +126,7 @@ app.get('*', (req, res, next) => {
 app.use((req, res, next) => {
   if (missingRequiredEnv.length === 0) return next();
   // Allow health/env-check even when envs are missing
-  if (req.path === '/api/health' || req.path === '/api/env-check') return next();
+  if (req.path === '/api/health' || req.path === '/api/env-check' || req.path === '/api/games') return next();
   // If it's an API request, block it and report missing envs
   if (req.path.startsWith('/api')) {
     return res.status(500).json({
@@ -177,6 +190,17 @@ async function processMessagesFromHistory(historyId, historyResponse, previousMe
 }
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+
+app.get('/api/games', async (req, res) => {
+  try {
+    const query = String(req.query.q || '').trim();
+    const games = await getGamesCatalog(query);
+    return res.json(games);
+  } catch (error) {
+    console.error('Failed to load games:', error);
+    return res.status(500).json({ error: error.message || 'Failed to load games' });
+  }
+});
 
 // Dev-only debug endpoint to verify Gmail OAuth credentials.
 if (process.env.NODE_ENV !== 'production') {

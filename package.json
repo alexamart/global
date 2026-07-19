@@ -1,0 +1,14 @@
+{
+  "name": "global-site",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm ci && npm run build && cd ../backend && npm ci",
+    "build:frontend": "cd frontend && npm ci && npm run build",
+    "start": "cd backend && npm start",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

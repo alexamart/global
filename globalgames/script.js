@@ -160,3 +160,132 @@ async function loadSiteStatus() {
 }
 
 loadSiteStatus();
+
+// --- Games search and rendering ---
+const gamesInput = document.getElementById('game-search-input');
+const gamesResults = document.getElementById('games-results');
+const platformBadgesContainer = document.getElementById('platform-badges');
+const featuredGamesContainer = document.getElementById('games-featured');
+
+const PLATFORM_BADGES = [
+  { key: 'Steam', name: 'Steam', domain: 'store.steampowered.com' },
+  { key: 'BattleNet', name: 'BattleNet', domain: 'battle.net' },
+  { key: 'EpicGames', name: 'Epic Games', domain: 'epicgames.com' },
+  { key: 'RioGamer', name: 'RioGamer', domain: 'riogamer.com' },
+  { key: 'More', name: 'Más', domain: 'globalgames.gg' },
+];
+
+function faviconFor(domain) {
+  return `https://www.google.com/s2/favicons?sz=64&domain=${encodeURIComponent(domain)}`;
+}
+
+function renderPlatformBadges() {
+  if (!platformBadgesContainer) return;
+  platformBadgesContainer.innerHTML = PLATFORM_BADGES.map(p => `
+    <a class="platform-badge" href="https://${p.domain}" target="_blank" rel="noopener noreferrer" title="${p.name}">
+      <img src="${faviconFor(p.domain)}" alt="${p.name}" />
+      <span class="platform-badge__label">${p.name}</span>
+    </a>
+  `).join('');
+}
+
+const FEATURED_GAMES = [
+  { name: 'League of Legends', url: 'https://www.leagueoflegends.com/es-es/', domain: 'leagueoflegends.com', tag: 'MOBA' },
+  { name: 'Counter-Strike 2', url: 'https://www.counter-strike.net/cs2?l=spanish', domain: 'counter-strike.net', tag: 'Shooter' },
+  { name: 'Fortnite', url: 'https://www.fortnite.com/', domain: 'fortnite.com', tag: 'Battle Royale' },
+  { name: 'Dota 2', url: 'https://www.dota2.com/home', domain: 'dota2.com', tag: 'MOBA' },
+  { name: 'Call of Duty: Warzone', url: 'https://www.callofduty.com/es/warzone', domain: 'callofduty.com', tag: 'Shooter' },
+  { name: 'Valorant', url: 'https://playvalorant.com/es-mx/', domain: 'playvalorant.com', tag: 'Táctico' },
+];
+
+function renderFeaturedGames() {
+  if (!featuredGamesContainer) return;
+  featuredGamesContainer.innerHTML = `
+    <div class="games-featured__header">
+      <span class="games-featured__eyebrow">Destacados</span>
+      <h3>Juegos principales</h3>
+    </div>
+    <div class="games-featured__grid">
+      ${FEATURED_GAMES.map((game) => `
+        <a class="games-featured__card" href="${game.url}" target="_blank" rel="noopener noreferrer">
+          <div class="games-featured__icon"><img src="${faviconFor(game.domain)}" alt="${(game.name||'').replace(/</g,'&lt;')} logo" width="40" height="40"/></div>
+          <div>
+            <h4>${String(game.name || '').replace(/</g, '&lt;')}</h4>
+            <p>${String(game.tag || '').replace(/</g, '&lt;')}</p>
+          </div>
+        </a>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderGamesList(games, initialDisplay = false) {
+  if (!gamesResults) return;
+  if (!Array.isArray(games) || games.length === 0) {
+    gamesResults.innerHTML = `
+      <div class="game-card game-card--empty">
+        <div class="no-results-badge">¡No en lista todavía!</div>
+        <h3>¿Buscabas un juego especial?</h3>
+        <p>Si no está en nuestra lista, lo instalamos para ti en cuanto lo pidas.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const effectiveGames = initialDisplay ? games.slice(0, 6) : games;
+  const items = effectiveGames.map(g => `
+    <article class="game-card" data-slug="${String(g.slug || '')}">
+      <div class="game-card__header">
+        <span class="game-card__icon" aria-hidden="true">🎮</span>
+        <h3 class="game-card__title">${String(g.name || '').replace(/</g, '&lt;')}</h3>
+      </div>
+      <div class="game-card__platforms">
+        ${(Array.isArray(g.platforms) ? g.platforms : []).slice(0,3).map(p => `
+          <a class="game-card__platform" href="https://${(p.domain||'').replace(/\"/g,'')}" target="_blank" rel="noopener noreferrer">
+            <img src="${faviconFor((p.domain||'').toString())}" alt="${(p.name||'').replace(/</g,'&lt;')}" />
+            <span>${(p.name||'').replace(/</g,'&lt;')}</span>
+          </a>
+        `).join('')}
+      </div>
+    </article>
+  `).join('');
+
+  const moreGamesCard = initialDisplay ? `
+    <article class="game-card game-card--cta">
+      <div class="game-card__header">
+        <span class="game-card__icon game-card__icon--highlight" aria-hidden="true">✨</span>
+        <h3 class="game-card__title">Más juegos</h3>
+      </div>
+      <p>Busca en nuestro catálogo para encontrar tu título favorito.</p>
+    </article>
+  ` : '';
+
+  gamesResults.innerHTML = `${items}${moreGamesCard}`;
+}
+
+let gamesTimer = null;
+async function fetchAndRenderGames(query) {
+  try {
+    const q = String(query || '').trim();
+    const url = q ? `/api/games?q=${encodeURIComponent(q)}` : '/api/games';
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Failed to fetch games');
+    const data = await res.json();
+    renderGamesList(Array.isArray(data) ? data : [], q === '');
+  } catch (err) {
+    console.warn('Games fetch failed:', err);
+    renderGamesList([]);
+  }
+}
+
+if (gamesInput) {
+  gamesInput.addEventListener('input', (e) => {
+    clearTimeout(gamesTimer);
+    gamesTimer = setTimeout(() => fetchAndRenderGames(e.target.value), 220);
+  });
+}
+
+// Initial render
+renderPlatformBadges();
+renderFeaturedGames();
+fetchAndRenderGames('');
