@@ -194,11 +194,82 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 app.get('/api/games', async (req, res) => {
   try {
     const query = String(req.query.q || '').trim();
+    // Only return enabled games for public API
+    try {
+      const { query: dbQuery } = require('./db');
+      const rows = await dbQuery(
+        'SELECT id, name, slug, platforms FROM games WHERE ($1::text = "" OR name ILIKE $1) AND (disabled IS NOT TRUE) ORDER BY name ASC',
+        [`%${query}%`]
+      );
+      if (Array.isArray(rows.rows) && rows.rows.length > 0) {
+        return res.json(rows.rows.map((row) => ({ id: row.id, name: row.name, slug: row.slug, platforms: Array.isArray(row.platforms) ? row.platforms : [] })));
+      }
+    } catch (err) {
+      // fallback to built-in catalog
+    }
     const games = await getGamesCatalog(query);
     return res.json(games);
   } catch (error) {
     console.error('Failed to load games:', error);
     return res.status(500).json({ error: error.message || 'Failed to load games' });
+  }
+});
+
+// Admin endpoints for managing games
+app.get('/api/admin/games', async (req, res) => {
+  try {
+    const { query } = require('./db');
+    const rows = await query('SELECT id, name, slug, platforms, disabled FROM games ORDER BY name ASC');
+    return res.json(rows.rows.map((r) => ({ id: r.id, name: r.name, slug: r.slug, platforms: Array.isArray(r.platforms) ? r.platforms : [], disabled: Boolean(r.disabled) })));
+  } catch (error) {
+    console.error('Failed to load admin games:', error);
+    return res.status(500).json({ error: error.message || 'Failed to load admin games' });
+  }
+});
+
+app.post('/api/admin/games', async (req, res) => {
+  try {
+    const { name, slug, platforms } = req.body || {};
+    if (!name) return res.status(400).json({ error: 'Missing name' });
+    const { query } = require('./db');
+    const plat = Array.isArray(platforms) ? platforms : [];
+    const result = await query(
+      'INSERT INTO games (name, slug, platforms, disabled) VALUES ($1, $2, $3, FALSE) ON CONFLICT (name) DO UPDATE SET slug = EXCLUDED.slug, platforms = EXCLUDED.platforms, disabled = FALSE RETURNING id, name, slug, platforms, disabled',
+      [name, slug || null, JSON.stringify(plat)]
+    );
+    return res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Failed to create/update game:', error);
+    return res.status(500).json({ error: error.message || 'Failed to create/update game' });
+  }
+});
+
+app.patch('/api/admin/games/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    if (!id) return res.status(400).json({ error: 'Missing id' });
+    const { disabled } = req.body || {};
+    const { query } = require('./db');
+    const result = await query('UPDATE games SET disabled = $1, updated_at = now() WHERE id = $2 RETURNING id, name, slug, platforms, disabled', [Boolean(disabled), id]);
+    if (!result.rows.length) return res.status(404).json({ error: 'Not found' });
+    return res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Failed to update game:', error);
+    return res.status(500).json({ error: error.message || 'Failed to update game' });
+  }
+});
+
+app.delete('/api/admin/games/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    if (!id) return res.status(400).json({ error: 'Missing id' });
+    const { query } = require('./db');
+    const result = await query('DELETE FROM games WHERE id = $1 RETURNING id, name', [id]);
+    if (!result.rows.length) return res.status(404).json({ error: 'Not found' });
+    return res.json({ deleted: true, row: result.rows[0] });
+  } catch (error) {
+    console.error('Failed to delete game:', error);
+    return res.status(500).json({ error: error.message || 'Failed to delete game' });
   }
 });
 

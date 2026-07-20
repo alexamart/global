@@ -238,15 +238,16 @@ function renderGamesList(games, initialDisplay = false) {
       <div class="game-card__header">
         <span class="game-card__icon" aria-hidden="true">🎮</span>
         <h3 class="game-card__title">${String(g.name || '').replace(/</g, '&lt;')}</h3>
-      </div>
-      <div class="game-card__platforms">
+
         ${(Array.isArray(g.platforms) ? g.platforms : []).slice(0,3).map(p => `
-          <a class="game-card__platform" href="https://${(p.domain||'').replace(/\"/g,'')}" target="_blank" rel="noopener noreferrer">
+          <a class="game-card__platform" href="https://${(p.domain||'').replace(/\"/g,'')}" target="_blank" rel="noopener noreferrer" title="${(p.name||'').replace(/</g,'&lt;')}" aria-label="${(p.name||'').replace(/</g,'&lt;')}">
             <img src="${faviconFor((p.domain||'').toString())}" alt="${(p.name||'').replace(/</g,'&lt;')}" />
-            <span>${(p.name||'').replace(/</g,'&lt;')}</span>
           </a>
         `).join('')}
+        
       </div>
+         
+    
     </article>
   `).join('');
 

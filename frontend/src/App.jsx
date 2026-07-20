@@ -44,6 +44,8 @@ function App() {
   const [siteHoursStart, setSiteHoursStart] = useState('10:00');
   const [siteHoursEnd, setSiteHoursEnd] = useState('23:00');
   const [siteStatus, setSiteStatus] = useState('Abierto todos los días de 10:00 - 23:00');
+  const [adminGames, setAdminGames] = useState([]);
+  const [gamesQuery, setGamesQuery] = useState('');
   const [toasts, setToasts] = useState([]);
   const knownPaymentIdsRef = useRef(new Set());
 
@@ -223,15 +225,21 @@ function App() {
 
       const hoursDisplay = data.site_hours_start && data.site_hours_end ? `${data.site_hours_start} - ${data.site_hours_end}` : data.site_hours || '10:00 - 23:00';
 
+      // If site_closed_until is in the past, treat as not closed and fall back to schedule
       if (data.site_closed) {
-        setSiteStatus(
-          data.site_closed_until
-            ? `Cerrado hasta ${new Date(data.site_closed_until).toLocaleDateString('es-PE', {
-                day: '2-digit',
-                month: 'long',
-              })}`
-            : data.site_closed_text || 'Abre mañana'
-        );
+        if (data.site_closed_until) {
+          const until = new Date(data.site_closed_until);
+          const now = new Date();
+          if (until.getTime() <= now.getTime()) {
+            // expired closure -> use schedule
+            setSiteStatus(`Abierto todos los días de ${hoursDisplay}`);
+            setSiteClosed(false);
+          } else {
+            setSiteStatus(`Cerrado hasta ${until.toLocaleDateString('es-PE', { day: '2-digit', month: 'long' })}`);
+          }
+        } else {
+          setSiteStatus(data.site_closed_text || 'Abre mañana');
+        }
       } else {
         setSiteStatus(`Abierto todos los días de ${hoursDisplay}`);
       }
@@ -241,6 +249,50 @@ function App() {
       console.error(error);
       setStatus(`Error cargando estado del sitio: ${error.message}`);
       return null;
+    }
+  };
+
+  // --- Games admin functions ---
+  const loadAdminGames = async (q = '') => {
+    try {
+      const url = `/api/admin/games${q ? `?q=${encodeURIComponent(q)}` : ''}`;
+      const data = await fetchJson(url);
+      setAdminGames(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.warn('Failed to load admin games:', err);
+      setAdminGames([]);
+    }
+  };
+
+  const createOrUpdateGame = async (payload) => {
+    try {
+      const data = await fetchJson('/api/admin/games', { method: 'POST', body: JSON.stringify(payload) });
+      await loadAdminGames(gamesQuery);
+      setStatus(`Juego ${data.name} guardado.`);
+      return data;
+    } catch (err) {
+      setStatus(`Error guardando juego: ${err.message}`);
+      throw err;
+    }
+  };
+
+  const deleteGame = async (id) => {
+    try {
+      await fetchJson(`/api/admin/games/${id}`, { method: 'DELETE' });
+      await loadAdminGames(gamesQuery);
+      setStatus('Juego eliminado.');
+    } catch (err) {
+      setStatus(`Error eliminando: ${err.message}`);
+    }
+  };
+
+  const toggleGameDisabled = async (id, disabled) => {
+    try {
+      await fetchJson(`/api/admin/games/${id}`, { method: 'PATCH', body: JSON.stringify({ disabled }) });
+      await loadAdminGames(gamesQuery);
+      setStatus('Juego actualizado.');
+    } catch (err) {
+      setStatus(`Error actualizando juego: ${err.message}`);
     }
   };
 
@@ -321,6 +373,8 @@ function App() {
       };
     }
   }, []);
+
+  useEffect(() => { loadAdminGames(); }, []);
 
   const lastHistoryRef = useRef(null);
   const fallbackRefreshRef = useRef(0);
@@ -526,8 +580,56 @@ function App() {
           <button onClick={() => { localStorage.removeItem('paymentsParserConfig'); setParserConfig({ amountRegex: "S\/\s?([0-9]+(?:[\.,][0-9]{1,2})?)|([0-9]+(?:[\.,][0-9]{2}))", nameRegex: "enviado por\s*([A-Z][^\n\r<]+)" }); setStatus('Parser restaurado a valores por defecto.'); }} style={{ marginLeft: 8 }}>Restaurar</button>
         </div>
       </section>
+
+      <section className="games-admin">
+        <h2>Administración de Juegos</h2>
+        <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+          <input placeholder="Buscar juegos" value={gamesQuery} onChange={(e) => setGamesQuery(e.target.value)} />
+          <button onClick={() => loadAdminGames(gamesQuery)}>Buscar</button>
+          <button onClick={() => { setGamesQuery(''); loadAdminGames(''); }}>Reset</button>
+        </div>
+        <CreateGameForm onSave={createOrUpdateGame} />
+        <table>
+          <thead>
+            <tr><th>Nombre</th><th>Slug</th><th>Plataformas</th><th>Disabled</th><th>Acciones</th></tr>
+          </thead>
+          <tbody>
+            {adminGames.map((g) => (
+              <tr key={g.id}>
+                <td>{g.name}</td>
+                <td>{g.slug}</td>
+                <td>{(g.platforms || []).map(p => p.name || p.key).join(', ')}</td>
+                <td><input type="checkbox" checked={!!g.disabled} onChange={(e) => toggleGameDisabled(g.id, e.target.checked)} /></td>
+                <td><button onClick={() => deleteGame(g.id)}>Eliminar</button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 }
 
 export default App;
+
+function CreateGameForm({ onSave }) {
+  const [name, setName] = useState('');
+  const [slug, setSlug] = useState('');
+  const [platforms, setPlatforms] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const platArr = platforms.split(',').map(s => s.trim()).filter(Boolean).map((p) => ({ name: p }));
+    await onSave({ name, slug: slug || undefined, platforms: platArr });
+    setName(''); setSlug(''); setPlatforms('');
+  };
+
+  return (
+    <form onSubmit={handleSubmit} style={{ marginBottom: 12 }}>
+      <input placeholder="Nombre del juego" value={name} onChange={(e) => setName(e.target.value)} required />
+      <input placeholder="Slug (opcional)" value={slug} onChange={(e) => setSlug(e.target.value)} />
+      <input placeholder="Plataformas (coma separada: Steam, Epic)" value={platforms} onChange={(e) => setPlatforms(e.target.value)} />
+      <button type="submit">Agregar/Guardar</button>
+    </form>
+  );
+}

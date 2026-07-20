@@ -1,3 +1,54 @@
+const GAME_NAME_NORMALIZATION = new Map([
+  ['Age2HD', 'Age of Empires II HD'],
+  ['AoE2DE', 'Age of Empires II: Definitive Edition'],
+  ['Battlefield 6', 'Battlefield 2042'],
+  ['DB Xenoverse 2', 'Dragon Ball Xenoverse 2'],
+  ['dota 2 beta', 'Dota 2'],
+  ['DRAGON BALL FighterZ', 'Dragon Ball FighterZ'],
+  ['DRAGON BALL Sparking! ZERO', 'Dragon Ball: Sparking! ZERO'],
+  ['EA SPORTS FC 25 Demo', 'EA SPORTS FC 25'],
+  ['FateTriggerDemo', 'FateTrigger'],
+  ['ItTakesTwo', 'It Takes Two'],
+  ['MegaMan2', 'Mega Man 2'],
+  ['MegaMan_BattleNetwork_LegacyCollection_Vol1', 'Mega Man Battle Network Legacy Collection Vol. 1'],
+  ['MegaMan_BattleNetwork_LegacyCollection_Vol2', 'Mega Man Battle Network Legacy Collection Vol. 2'],
+  ['MEGA_MAN_X_DiVE_Offline', 'Mega Man X DiVE Offline'],
+  ['ONE PUNCH MAN A HERO NOBODY KNOWS', 'One Punch Man: A Hero Nobody Knows'],
+  ['PVZGW2', 'Plants vs. Zombies: Garden Warfare 2'],
+  ['RESIDENT EVIL 2 BIOHAZARD RE2', 'Resident Evil 2'],
+  ['RESIDENT EVIL 4 BIOHAZARD RE4', 'Resident Evil 4'],
+  ['RESIDENT EVIL 7 biohazard', 'Resident Evil 7'],
+  ['RESIDENT EVIL requiem BIOHAZARD requiem', 'Resident Evil Re:Verse'],
+  ['SonicColorsUltimate', 'Sonic Colors Ultimate'],
+  ['SonicRacingCrossWorlds', 'Sonic Racing Cross Worlds'],
+  ['SONIC_X_SHADOW_GENERATIONS', 'Sonic X Shadow Generations'],
+  ['PVZGW2', 'Plants vs. Zombies: Garden Warfare 2'],
+  ['paladins pts', 'Paladins'],
+  ['Slime Rancher Demo', 'Slime Rancher'],
+  ['Sand Playtest', 'Sand'],
+]);
+
+const GAME_NAME_BLACKLIST = new Set([
+  'Steamworks Shared',
+  'TaskbarHero',
+  'Aim Lab',
+]);
+
+function normalizeGameName(name) {
+  if (!name) return '';
+  const trimmed = String(name).trim();
+  const normalized = GAME_NAME_NORMALIZATION.get(trimmed);
+  if (normalized) return normalized;
+
+  const cleaned = trimmed
+    .replace(/\b(Demo|demo|Trial|trial|Playtest|playtest|Beta|beta|PTs|pts)\b/g, '')
+    .replace(/[_\-]+/g, ' ')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+
+  return cleaned.replace(/\s+$/g, '');
+}
+
 const GAME_NAMES = [
   'Age of Mythology Retold',
   'Age2HD',
@@ -163,11 +214,14 @@ function getPlatformsForGame(name) {
 function buildGameCatalog(names = GAME_NAMES) {
   return names
     .filter(Boolean)
-    .map((name, index) => ({
+    .map((name) => normalizeGameName(name))
+    .map((name) => ({ name }))
+    .filter((entry) => entry.name && !GAME_NAME_BLACKLIST.has(entry.name))
+    .map((entry, index) => ({
       id: index + 1,
-      name: String(name).trim(),
-      slug: slugify(name),
-      platforms: getPlatformsForGame(name),
+      name: entry.name,
+      slug: slugify(entry.name),
+      platforms: getPlatformsForGame(entry.name),
     }));
 }
 

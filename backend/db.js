@@ -28,12 +28,16 @@ async function ensureSchema() {
       name TEXT NOT NULL UNIQUE,
       slug TEXT NOT NULL UNIQUE,
       platforms JSONB DEFAULT '[]'::jsonb,
+      disabled BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMPTZ DEFAULT now(),
       updated_at TIMESTAMPTZ DEFAULT now()
     );`
   );
   await pool.query(
     'ALTER TABLE gmail_sync ADD COLUMN IF NOT EXISTS watch_enabled BOOLEAN DEFAULT TRUE;'
+  );
+  await pool.query(
+    'ALTER TABLE games ADD COLUMN IF NOT EXISTS disabled BOOLEAN DEFAULT FALSE;'
   );
   await pool.query(
     'ALTER TABLE gmail_sync ADD COLUMN IF NOT EXISTS allowed_senders TEXT DEFAULT NULL;'
