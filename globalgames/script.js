@@ -224,9 +224,9 @@ function renderGamesList(games, initialDisplay = false) {
   if (!Array.isArray(games) || games.length === 0) {
     gamesResults.innerHTML = `
       <div class="game-card game-card--empty">
-        <div class="no-results-badge">¡No en lista todavía!</div>
-        <h3>¿Buscabas un juego especial?</h3>
-        <p>Si no está en nuestra lista, lo instalamos para ti en cuanto lo pidas.</p>
+        <div class="no-results-badge">No en lista? No te preocupes!</div>
+        <h3>Visítanos y lo instalamos para ti!</h3>
+        <p>Nuestra experiencia en juegos y soporte técnico y atención te garantiza la mejor experiencia.</p>
       </div>
     `;
     return;
