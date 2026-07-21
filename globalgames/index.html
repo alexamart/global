@@ -49,35 +49,18 @@
             <img class="hero__brand-logo" src="gg-logo.png" alt="GG branding" />
             <div class="hero__brand-copy">
               <strong>Global Games</strong>
-              <span>El punto de encuentro para gaming premium y esports en Lima</span>
+              <span>Infraestructura premium para gaming y capacitación*</span>
             </div>
           </div>
           <p class="eyebrow" data-i18n="hero.eyebrow">Lan Center</p>
           <h1 data-i18n="hero.title">Global<br /><span>Games</span></h1>
-          <p class="hero__lead" data-i18n="hero.lead">Disfruta PCs de alto rendimiento, streaming y competencias con ambiente cómodo, conexión rápida y servicio especializado para cada partida.</p>
+          <p class="hero__lead" data-i18n="hero.lead">Gaming premium en Lima. Espacios cómodos, comunidad competitiva y una experiencia diseñada para tu comodidad.</p>
           <div class="hero__actions">
             <a class="button button--primary" href="#location" data-i18n="hero.action">Ver ubicación →</a>
           </div>
           <div class="hero__meta">
             <div><strong data-i18n="hero.locationLabel">Ubicación</strong><span data-i18n="hero.locationText">Lima, Perú</span></div>
             <div><strong data-i18n="hero.hoursLabel">Horario</strong><span data-i18n="hero.hoursText">Todos los días de 10:00 a 23:00</span></div>
-          </div>
-          <div class="hero__social" aria-label="Redes Global Games">
-            <a class="social-square" href="https://www.facebook.com/globalgamespe" target="_blank" rel="noopener noreferrer" title="Facebook">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path fill="currentColor" d="M22 12a10 10 0 1 0-11.5 9.9v-7H8.5v-3h2V9.5c0-2 1.2-3.1 3-3.1.9 0 1.8.2 1.8.2v2h-1c-1 0-1.3.6-1.3 1.2V12h2.2l-.4 3h-1.8v7A10 10 0 0 0 22 12Z" />
-              </svg>
-            </a>
-            <a class="social-square" href="https://www.instagram.com/globalgamespe" target="_blank" rel="noopener noreferrer" title="Instagram">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path fill="currentColor" d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5Zm8.5 2.25a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5Zm-4.25 1.25a5.75 5.75 0 1 1 0 11.5 5.75 5.75 0 0 1 0-11.5Zm0 1.5a4.25 4.25 0 1 0 0 8.5 4.25 4.25 0 0 0 0-8.5Z" />
-              </svg>
-            </a>
-            <a class="social-square" href="https://www.tiktok.com/@globalgamespe" target="_blank" rel="noopener noreferrer" title="TikTok">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path fill="currentColor" d="M17.5 4.5h-1.1c0 2.4 1.8 4.3 4.2 4.3v1.1c-2.8 0-5.1-2.3-5.1-5.1V4.5Zm-4.5.2a4.8 4.8 0 0 0-4.8 4.8A4.8 4.8 0 0 0 13 14.3v-1.1a3.7 3.7 0 1 1 0-7.4V4.7Zm.1 5.4A2.6 2.6 0 1 0 9.1 7.5v5.9a2.6 2.6 0 1 0 4.5-1.3V10.1Z" />
-              </svg>
-            </a>
           </div>
         </div>
       </section>
@@ -98,8 +81,8 @@
             </ul>
           </div>
           <div class="distribution-card__media">
-            <a href="https://www.youtube.com/watch?v=ZVQiLwwB1bg" target="_blank" rel="noopener noreferrer">
-              <img src="mapa.png" alt="Video de ubicación de Global Games" />
+            <a href="https://youtu.be/RL0ksMrCV50" target="_blank" rel="noopener noreferrer">
+              <img src="mapa.png" alt="Video de Global Games" />
             </a>
           </div>
         </div>
@@ -203,7 +186,6 @@
           <h2 data-i18n="games.title">Más de 100+ juegos disponibles</h2>
           <p class="section-heading__meta" data-i18n="games.meta">Busca tus títulos favoritos y descubre nuestras plataformas disponibles.</p>
         </div>
-        <div id="games-featured" class="games-featured" aria-label="Juegos principales"></div>
         <div class="games-search-panel">
           <label class="games-search" for="game-search-input">
             <span>Buscar juego</span>
@@ -211,8 +193,8 @@
           </label>
           <p class="games-search__hint">Plataformas: Steam, BattleNet, EpicGames, RioGamer y más</p>
           <div id="platform-badges" class="platform-badges" aria-hidden="false"></div>
+          <div id="games-results" class="games-grid" aria-live="polite"></div>
         </div>
-        <div id="games-results" class="games-grid" aria-live="polite"></div>
       </section>
 
      
@@ -279,16 +261,16 @@
         <a href="mailto:globalgamespe@gmail.com">globalgamespe@gmail.com</a>
         <a href="tel:+51976659367">+51 976 659 367</a>
         <div class="social-links" aria-label="Redes sociales Global Games">
-          <a class="social-link social-link--facebook" href="https://www.facebook.com/globalgamespe" target="_blank" rel="noopener noreferrer" title="Facebook">
+          <a class="social-link social-link--facebook" href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook">
             <span class="social-link__icon">f</span>
             <span>Facebook</span>
           </a>
-          <a class="social-link social-link--instagram" href="https://www.instagram.com/globalgamespe" target="_blank" rel="noopener noreferrer" title="Instagram">
-            <span class="social-link__icon">↗</span>
+          <a class="social-link social-link--instagram" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" title="Instagram">
+            <span class="social-link__icon">&#x1F4F7;</span>
             <span>Instagram</span>
           </a>
-          <a class="social-link social-link--tiktok" href="https://www.tiktok.com/@globalgamespe" target="_blank" rel="noopener noreferrer" title="TikTok">
-            <span class="social-link__icon">↗</span>
+          <a class="social-link social-link--tiktok" href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" title="TikTok">
+            <span class="social-link__icon">&#x1F3B6;</span>
             <span>TikTok</span>
           </a>
         </div>
