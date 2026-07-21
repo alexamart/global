@@ -307,12 +307,14 @@ img { display: block; max-width: 100%; }
 .hero__meta strong { display: block; color: var(--accent); margin-bottom: 0.3rem; font-size: 0.85rem; }
 .hero__meta span { font-size: 0.95rem; }
 
-.hero__social {
+.hero__social,
+.social-links {
   display: flex;
   gap: 1rem;
   margin-top: 1.5rem;
 }
-.social-square {
+.social-square,
+.social-link {
   display: inline-grid;
   place-items: center;
   width: 64px;
@@ -324,12 +326,36 @@ img { display: block; max-width: 100%; }
   font-size: 1.25rem;
   font-weight: 800;
   border: 1px solid rgba(255,255,255,0.18);
-  transition: transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+  transition: transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  overflow: hidden;
 }
-.social-square:hover {
+.social-square:hover,
+.social-link:hover {
   transform: translateY(-2px);
   background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.28);
   box-shadow: 0 14px 28px rgba(0,0,0,0.16);
+}
+.social-links {
+  margin-top: 1rem;
+}
+.social-link__icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  font-size: 1.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.social-link__icon svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+  fill: currentColor;
 }
 
 /* Sections */
@@ -1083,45 +1109,61 @@ img { display: block; max-width: 100%; }
   gap: 0.75rem;
   margin-top: 1rem;
 }
-.social-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  padding: 0.8rem 1rem;
-  border-radius: 999px;
-  color: #fff;
-  font-size: 0.92rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.16);
+.social-link,
+.social-square {
+  display: inline-grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
   background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-weight: 800;
+  border: 1px solid rgba(255,255,255,0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
-.social-link:hover {
+.social-link:hover,
+.social-square:hover {
   transform: translateY(-2px);
   box-shadow: 0 16px 28px rgba(0,0,0,0.2);
-  background: rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.16);
+  border-color: rgba(255,255,255,0.3);
 }
 .social-link__icon {
-  display: grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.14);
-  font-size: 1rem;
-  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1;
 }
-.social-link--facebook {
-  background: rgba(33, 107, 255, 0.14);
+.social-link__icon svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
 }
-.social-link--instagram {
-  background: rgba(255, 255, 255, 0.08);
+.social-link--facebook,
+.social-square--facebook,
+.social-link--instagram,
+.social-square--instagram,
+.social-link--tiktok,
+.social-square--tiktok {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.14);
 }
-.social-link--tiktok {
-  background: rgba(255, 255, 255, 0.08);
+.social-link,
+.social-square {
+  border-width: 1px;
 }
+
+
+
 
 .footer__brand {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
