@@ -220,8 +220,10 @@ function App() {
       setSiteClosed(Boolean(data.site_closed));
       setSiteClosedUntil(data.site_closed_until || '');
       setSiteClosedText(data.site_closed_text || 'Abre mañana');
-      setSiteHoursStart(data.site_hours_start || '10:00');
-      setSiteHoursEnd(data.site_hours_end || '23:00');
+      const siteHoursStartRaw = data.site_hours_start_raw || data.site_hours_start || '10:00';
+      const siteHoursEndRaw = data.site_hours_end_raw || data.site_hours_end || '23:00';
+      setSiteHoursStart(siteHoursStartRaw);
+      setSiteHoursEnd(siteHoursEndRaw);
 
       const hoursDisplay = data.site_hours_start && data.site_hours_end ? `${data.site_hours_start} - ${data.site_hours_end}` : data.site_hours || '10:00 - 23:00';
 
@@ -312,10 +314,10 @@ function App() {
     setSiteClosed(Boolean(result.site_closed));
     setSiteClosedUntil(result.site_closed_until || '');
     setSiteClosedText(result.site_closed_text || 'Abre mañana');
-    setSiteHoursStart(result.site_hours_start || '10:00');
-    setSiteHoursEnd(result.site_hours_end || '23:00');
+    setSiteHoursStart(result.site_hours_start_raw || result.site_hours_start || '10:00');
+    setSiteHoursEnd(result.site_hours_end_raw || result.site_hours_end || '23:00');
     setStatus('Estado del local actualizado.');
-    const hoursDisplay = result.site_hours_start && result.site_hours_end ? `${result.site_hours_start} - ${result.site_hours_end}` : result.site_hours || '10:00 - 23:00';
+    const hoursDisplay = result.site_hours || (result.site_hours_start && result.site_hours_end ? `${result.site_hours_start} - ${result.site_hours_end}` : '10:00 - 23:00');
     if (result.site_closed) {
       setSiteStatus(
         result.site_closed_until

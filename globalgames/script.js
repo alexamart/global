@@ -117,15 +117,28 @@ async function loadSiteStatus() {
 
     const parseTime = (value) => {
       if (!value || typeof value !== 'string') return null;
-      const [hour, minute] = value.split(':').map(Number);
+      const normalized = value.trim().toLowerCase().replace(/\./g, '').replace(/\s+/g, ' ');
+      const match = normalized.match(/^([0-9]{1,2}):([0-9]{2})(?:\s*(am|pm))?$/);
+      if (!match) return null;
+      let hour = Number(match[1]);
+      const minute = Number(match[2]);
+      const ampm = match[3];
       if (Number.isNaN(hour) || Number.isNaN(minute)) return null;
+      if (ampm) {
+        if (hour === 12) {
+          hour = ampm === 'am' ? 0 : 12;
+        } else if (ampm === 'pm') {
+          hour += 12;
+        }
+      }
+      if (hour < 0 || hour > 23 || minute < 0 || minute > 59) return null;
       return hour * 60 + minute;
     };
 
     const now = new Date();
     const currentMinutes = now.getHours() * 60 + now.getMinutes();
-    const startMinutes = parseTime(data.site_hours_start) ?? parseTime((data.site_hours || '10:00 - 23:00').split('-')[0].trim());
-    const endMinutes = parseTime(data.site_hours_end) ?? parseTime((data.site_hours || '10:00 - 23:00').split('-')[1]?.trim());
+    const startMinutes = parseTime(data.site_hours_start_raw || data.site_hours_start) ?? parseTime((data.site_hours || '10:00 - 23:00').split('-')[0].trim());
+    const endMinutes = parseTime(data.site_hours_end_raw || data.site_hours_end) ?? parseTime((data.site_hours || '10:00 - 23:00').split('-')[1]?.trim());
     const isScheduledOpen = (() => {
       if (startMinutes === null || endMinutes === null) return true;
       if (startMinutes === endMinutes) return true;

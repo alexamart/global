@@ -64,7 +64,7 @@ function sendFile(res, filePath) {
   createReadStream(filePath).pipe(res);
 }
 
-const BACKEND_BASE = `http://localhost:${process.env.BACKEND_PORT || 4100}`;
+const BACKEND_BASE = `http://localhost:${process.env.BACKEND_PORT || process.env.PORT || 4000}`;
 
 async function proxyApiRequest(req, res, requestUrl) {
   const targetUrl = new URL(requestUrl, BACKEND_BASE).toString();

@@ -349,18 +349,34 @@ app.post('/api/settings/site-status', async (req, res) => {
   }
 });
 
+const formatTimeToAmPm = (value) => {
+  if (!value || typeof value !== 'string') return null;
+  const [hourRaw, minuteRaw] = value.split(':');
+  const hour = Number(hourRaw);
+  const minute = Number(minuteRaw);
+  if (Number.isNaN(hour) || Number.isNaN(minute)) return null;
+  const period = hour >= 12 ? 'p.m.' : 'a.m.';
+  const hour12 = hour % 12 || 12;
+  return `${hour12}:${minute.toString().padStart(2, '0')} ${period}`;
+};
+
 app.get('/api/settings/site-status', async (req, res) => {
   try {
     const syncState = await getSyncState();
     const hoursStart = syncState?.site_hours_start || '10:00';
     const hoursEnd = syncState?.site_hours_end || '23:00';
+    const formattedHoursStart = formatTimeToAmPm(hoursStart) || hoursStart;
+    const formattedHoursEnd = formatTimeToAmPm(hoursEnd) || hoursEnd;
     res.json({
       site_closed: Boolean(syncState?.site_closed),
       site_closed_until: syncState?.site_closed_until || null,
       site_closed_text: syncState?.site_closed_text || null,
-      site_hours_start: hoursStart,
-      site_hours_end: hoursEnd,
-      site_hours: `${hoursStart} - ${hoursEnd}`,
+      site_hours_start_raw: hoursStart,
+      site_hours_end_raw: hoursEnd,
+      site_hours_start: formattedHoursStart,
+      site_hours_end: formattedHoursEnd,
+      site_hours: `${formattedHoursStart} - ${formattedHoursEnd}`,
+      site_hours_formatted: `${formattedHoursStart} - ${formattedHoursEnd}`,
     });
   } catch (error) {
     console.error(error);
