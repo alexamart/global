@@ -5,7 +5,7 @@ const backendPort = process.env.BACKEND_PORT || 4100;
 
 export default defineConfig(({ mode }) => ({
   plugins: [react()],
-  base: mode === 'production' ? '/admin/' : '/',
+  base: '/admin/',
   build: {
     outDir: 'dist',
   },

@@ -44,13 +44,13 @@
       <section id="hero" class="hero reveal">
         <div class="hero__overlay"></div>
         <div class="hero__content">
-          <div class="hero__brand">
+          <!-- <div class="hero__brand">
             <img class="hero__brand-logo" src="gg-logo.png" alt="GG branding" />
             <div class="hero__brand-copy">
               <strong>Global Games</strong>
               <span>Infraestructura premium para gaming y capacitación*</span>
             </div>
-          </div>
+          </div> -->
           <p class="eyebrow" data-i18n="hero.eyebrow">Lan Center</p>
           <h1 data-i18n="hero.title">Global<br /><span>Games</span></h1>
           <p class="hero__lead" data-i18n="hero.lead">Gaming premium en Lima. Espacios cómodos, comunidad competitiva y una experiencia diseñada para tu comodidad.</p>
@@ -97,9 +97,12 @@
             </ul>
           </div>
           <div class="distribution-card__media">
-            <a href="https://youtu.be/RL0ksMrCV50" target="_blank" rel="noopener noreferrer">
-              <img src="mapa.png" alt="Video de Global Games" />
-            </a>
+            <div class="distribution-card__video distribution-card__video--preview" data-video-id="RL0ksMrCV50">
+              <button class="distribution-card__video-cover" type="button" aria-label="Reproducir video">
+                <img src="mapa.png" alt="Video de Global Games" />
+                <span class="distribution-card__play" aria-hidden="true">▶</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -165,8 +168,8 @@
               <p class="spec-card__label">Placa madre</p>
             </div>
             <ul class="spec-card__list">
+              <li><a href="https://www.msi.com/Motherboard/B550M-PRO-VDH-WIFI" target="_blank" rel="noopener noreferrer">MSI b550m Pro-vdh Wifi</a></li>
               <li><a href="https://rog.asus.com/us/motherboards/rog-maximus/rog-maximus-xi-hero-model/" target="_blank" rel="noopener noreferrer">ROG MAXIMUS XI HERO</a></li>
-              <li><a href="https://www.msi.com/Motherboard/B550M-PRO-VDH-WIFI" target="_blank" rel="noopener noreferrer">B550M PRO-VDH WIFI</a></li>
             </ul>
           </article>
 
@@ -177,7 +180,7 @@
             </div>
             <ul class="spec-card__list">
               <li><a href="https://www.antryx.com/producto/mk-zigra-evo/" target="_blank" rel="noopener noreferrer">TECLADOS MECÁNICOS MK Zigra EVO</a></li>
-              <li><a href="https://www.logitechg.com/en-us/shop/p/g203-lightsync-rgb-gaming-mouse" target="_blank" rel="noopener noreferrer">Logitech G203 LIGHTSYNC RGB</a></li>
+              <li><a href="https://www.logitechg.com/en-us/shop/p/g203-lightsync-rgb-gaming-mouse" target="_blank" rel="noopener noreferrer">Mouse Logitech G203 LIGHTSYNC RGB</a></li>
               <li><a href="https://www.antryx.com/producto/enigma-se/" target="_blank" rel="noopener noreferrer">Audífonos Gamer Enigma SE</a></li>
             </ul>
           </article>
@@ -189,7 +192,7 @@
             </div>
             <ul class="spec-card__list">
               <li><a href="https://zowie.benq.com/en-ap/monitor/xl2546k.html" target="_blank" rel="noopener noreferrer">BenQ ZOWIE XL2546K 240Hz</a></li>
-              <li><a href="https://www.amazon.com/BenQ-XL2430-Equalizer-Competitive-S-Switch/dp/B01H5KKW0A" target="_blank" rel="noopener noreferrer">BenQ XL2430 Zowie 24"</a></li>
+              <li><a href="https://www.amazon.com/BenQ-XL2430-Equalizer-Competitive-S-Switch/dp/B01H5KKW0A" target="_blank" rel="noopener noreferrer">BenQ ZOWIE 24" XL2430 Full HD 144Hz</a></li>
               <li><a href="https://www.msi.com/Monitor/MAG-27C6X" target="_blank" rel="noopener noreferrer">MSI MAG 27C6X 27" Full HD</a></li>
             </ul>
           </article>
@@ -291,9 +294,9 @@
               </article>
             </div>
             <div class="gallery__controls">
-              <button class="slider-button" data-dir="prev">←</button>
+              <button class="slider-button" data-dir="prev" aria-label="Anterior">←</button>
               <span class="gallery__counter">01 // 04</span>
-              <button class="slider-button" data-dir="next">→</button>
+              <button class="slider-button" data-dir="next" aria-label="Siguiente">→</button>
             </div>
           </div>
         </div>
@@ -346,7 +349,7 @@
       </div>
       <div class="footer__column">
         <p class="eyebrow" data-i18n="footer.hours">Horario</p>
-        <p id="footer-hours" data-i18n="footer.schedule">Horario: 10:00 - 23:00</p>
+        <p id="footer-hours" data-i18n="footer.schedule">Horario: 10:00 a.m - 02:00 a.m (madrugada)</p>
       </div>
       <div class="footer__column">
          </div>

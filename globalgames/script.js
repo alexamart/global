@@ -10,10 +10,20 @@ const observer = new IntersectionObserver((entries) => {
 revealItems.forEach((item) => observer.observe(item));
 const slides = Array.from(document.querySelectorAll('.gallery__slide'));
 const buttons = document.querySelectorAll('.slider-button');
+const galleryCounter = document.querySelector('.gallery__counter');
 let current = 0;
-function showSlide(index) { slides.forEach((slide, i) => slide.classList.toggle('active', i === index)); }
-function nextSlide() { current = (current + 1) % slides.length; showSlide(current); }
-function prevSlide() { current = (current - 1 + slides.length) % slides.length; showSlide(current); }
+function updateGalleryCounter(index) {
+  if (!galleryCounter) return;
+  const total = slides.length;
+  galleryCounter.textContent = `${String(index + 1).padStart(2, '0')} // ${String(total).padStart(2, '0')}`;
+}
+function showSlide(index) {
+  current = index;
+  slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+  updateGalleryCounter(index);
+}
+function nextSlide() { showSlide((current + 1) % slides.length); }
+function prevSlide() { showSlide((current - 1 + slides.length) % slides.length); }
 buttons.forEach((button) => button.addEventListener('click', () => (button.dataset.dir === 'next' ? nextSlide() : prevSlide())));
 setInterval(nextSlide, 5000);
 showSlide(0);
@@ -161,6 +171,23 @@ async function loadSiteStatus() {
 
 loadSiteStatus();
 
+const distributionVideoPreview = document.querySelector('.distribution-card__video--preview');
+if (distributionVideoPreview) {
+  distributionVideoPreview.addEventListener('click', () => {
+    const videoId = distributionVideoPreview.dataset.videoId;
+    if (!videoId) return;
+    distributionVideoPreview.innerHTML = `
+      <iframe
+        src="https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0"
+        title="Video de Global Games"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+    `;
+  }, { once: true });
+}
+
 // --- Games search and rendering ---
 const gamesInput = document.getElementById('game-search-input');
 const gamesResults = document.getElementById('games-results');
@@ -224,9 +251,9 @@ function renderGamesList(games, initialDisplay = false) {
   if (!Array.isArray(games) || games.length === 0) {
     gamesResults.innerHTML = `
       <div class="game-card game-card--empty">
-        <div class="no-results-badge">No en lista? No te preocupes!</div>
+        <div class="no-results-badge">No está en lista? No te preocupes!</div>
         <h3>Visítanos y lo instalamos para ti!</h3>
-        <p>Nuestra experiencia en juegos y soporte técnico y atención te garantiza la mejor experiencia.</p>
+        <p>Nuestra experiencia en juegos, soporte técnico y atención te garantiza la mejor experiencia.</p>
       </div>
     `;
     return;
